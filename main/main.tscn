@@ -17,8 +17,9 @@
 
 [node name="Connection" type="Node" parent="."]
 script = ExtResource("1_hlrxf")
-port = 5050
-use_localhost_in_editor = true
+port = 56614
+max_clients = 256
+host = "188.245.188.59"
 
 [node name="UserDataManager" parent="." instance=ExtResource("3_rwvlu")]
 

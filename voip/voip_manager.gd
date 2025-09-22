@@ -51,12 +51,9 @@ func player_spawned(id: int, player: Player) -> void:
 
 
 func _process(_delta: float) -> void:
-	if not Connection.is_peer_connected: return
-	if multiplayer.is_server(): return
-	
 	var accumulated_opusdata: Array[PackedByteArray] = []
 	while opuschunked.chunk_available():
-		if not Microphone.is_speaking:
+		if not should_send_opus_data():
 			opuschunked.drop_chunk()
 			continue
 		
@@ -67,8 +64,12 @@ func _process(_delta: float) -> void:
 		opuschunked.drop_chunk()
 		accumulated_opusdata.append(opusdata)
 	
-	if Microphone.is_speaking:
+	if should_send_opus_data():
 		rpc("opus_data_received", accumulated_opusdata)
+
+
+func should_send_opus_data() -> bool:
+	return Microphone.is_speaking and Connection.is_peer_connected and not multiplayer.is_server()
 
 
 @rpc("any_peer", "call_remote", "unreliable_ordered", 1)
@@ -84,5 +85,5 @@ func print_audio_server_info() -> void:
 	print("AudioServer:")
 	print("Input device list: ", AudioServer.get_input_device_list())
 	print("Output device list: ", AudioServer.get_output_device_list())
-	print("Input mix rate: only available in Godot 4.4+")
+	print("Input mix rate: ", AudioServer.get_input_mix_rate())
 	print("Output mix rate: ", AudioServer.get_mix_rate())

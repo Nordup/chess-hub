@@ -70,6 +70,7 @@ shape = SubResource("CapsuleShape3D_8x2xm")
 
 [node name="AudioListener3D" type="AudioListener3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, -0.2)
+doppler_tracking = 2
 script = ExtResource("2_4csdy")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="AudioListener3D"]

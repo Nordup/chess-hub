@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://b5ot2xc1qqau7"]
+
+[ext_resource type="Script" uid="uid://cqioaw185t54v" path="res://levels/interactable/base/interactable_base.gd" id="1_shfdx"]
+[ext_resource type="Resource" uid="uid://dgrhxxb8pf7wr" path="res://levels/interactable/interactable_events.res" id="2_wuumm"]
+[ext_resource type="Script" uid="uid://b56tgdjyylsid" path="res://levels/interactable/base/interactable_controller.gd" id="3_lowmd"]
+[ext_resource type="Shader" uid="uid://berxuvg6hsnni" path="res://levels/interactable/base/interactable.tres" id="4_wrh6f"]
+[ext_resource type="Script" uid="uid://cvaaonqdys4vu" path="res://levels/interactable/base/interactable_animation.gd" id="5_wfm1n"]
+[ext_resource type="AudioStream" uid="uid://cei602q22y2ao" path="res://levels/interactable/base/pop.mp3" id="6_8fca8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xnw17"]
+render_priority = 0
+shader = ExtResource("4_wrh6f")
+shader_parameter/Speed = 2.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_0i8rg"]
+top_radius = 1.0
+bottom_radius = 1.0
+height = 6.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_0e1i7"]
+radius = 1.0
+
+[node name="InteractableBase" type="Node3D"]
+script = ExtResource("1_shfdx")
+events = ExtResource("2_wuumm")
+
+[node name="Controller" type="Node" parent="." node_paths=PackedStringArray("interactable", "area", "animation", "sound")]
+script = ExtResource("3_lowmd")
+interactable = NodePath("..")
+area = NodePath("../Area3D")
+animation = NodePath("../MeshInstance3D")
+sound = NodePath("../AudioStreamPlayer3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+material_override = SubResource("ShaderMaterial_xnw17")
+instance_shader_parameters/Albedo = Color(0.490196, 0.819608, 1, 0.603922)
+mesh = SubResource("CylinderMesh_0i8rg")
+skeleton = NodePath("../..")
+script = ExtResource("5_wfm1n")
+active_color = Color(0, 1, 0.215686, 0.603922)
+active_gap = 2.0
+tween_time = 0.5
+tween_trans = 10
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_0e1i7")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_8fca8")
+volume_db = -45.0

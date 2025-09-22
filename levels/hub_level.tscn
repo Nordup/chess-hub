@@ -1,8 +1,8 @@
-[gd_scene load_steps=25 format=3 uid="uid://enpjmjm7ayyu"]
+[gd_scene load_steps=26 format=3 uid="uid://enpjmjm7ayyu"]
 
 [ext_resource type="Environment" uid="uid://cgqlrwpgos8m3" path="res://defaults/world_environment.tres" id="1_o5c6e"]
 [ext_resource type="PackedScene" uid="uid://bdvht85heque" path="res://addons/kenney_platformer_kit/platform.glb" id="2_gdd4m"]
-[ext_resource type="Script" path="res://main/spawn_points.gd" id="2_nfojo"]
+[ext_resource type="Script" uid="uid://cysbv3kct0j5c" path="res://main/spawn_points.gd" id="2_nfojo"]
 [ext_resource type="PackedScene" uid="uid://bh6yhe1c846yu" path="res://addons/kenney_platformer_kit/blockLarge.glb" id="3_vpp8y"]
 [ext_resource type="PackedScene" uid="uid://bilg3cgxxv2h5" path="res://addons/kenney_platformer_kit/block.glb" id="4_2mpoj"]
 [ext_resource type="PackedScene" uid="uid://dk3fmh7w4p32n" path="res://addons/kenney_platformer_kit/blockHexagonLow.glb" id="5_fancp"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://c3bqcbsjp74ro" path="res://addons/kenney_platformer_kit/blockCliffCorner.glb" id="21_f6kka"]
 [ext_resource type="PackedScene" uid="uid://n47fvgk8twbn" path="res://addons/kenney_platformer_kit/flowers.glb" id="22_5cyu8"]
 [ext_resource type="PackedScene" uid="uid://c8n1vfsyxx50l" path="res://addons/kenney_platformer_kit/flowersLow.glb" id="23_36p3d"]
+[ext_resource type="PackedScene" uid="uid://dp5ua27t3arad" path="res://chess/chess_table.tscn" id="25_efs00"]
 [ext_resource type="PackedScene" uid="uid://dykqq00uscsiy" path="res://levels/portal/portal.tscn" id="25_yv8ub"]
 
 [node name="HubLevel" type="Node3D"]
@@ -258,3 +259,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 8, -26)
 
 [node name="Portal2" parent="Portals" instance=ExtResource("25_yv8ub")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 22, 4, -3)
+
+[node name="ChessTable" parent="." instance=ExtResource("25_efs00")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.796113, 4.000002, 2.0104027)

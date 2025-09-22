@@ -12,16 +12,18 @@ var users = {} # {Peer ID: VoipUser}
 
 
 func _ready() -> void:
-	var mic_bus = AudioServer.get_bus_index("Record")
-	opuschunked = AudioServer.get_bus_effect(mic_bus, 0)
-	denoiser_available = opuschunked.denoiser_available()
-	print("Denoiser available: ", denoiser_available)
-	print_audio_server_info()
-	
 	if Connection.is_server(): return
 	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	player_spawner.player_spawned.connect(player_spawned)
+
+	var mic_bus = AudioServer.get_bus_index("Record")
+	opuschunked = AudioServer.get_bus_effect(mic_bus, 0)
+	AudioServer.set_bus_effect_enabled(mic_bus, 0, true)
+
+	denoiser_available = opuschunked.denoiser_available()
+	print("Denoiser available: ", denoiser_available)
+	print_audio_server_info()
 
 
 func peer_connected(id: int) -> void:
@@ -50,6 +52,8 @@ func player_spawned(id: int, player: Player) -> void:
 
 
 func _process(_delta: float) -> void:
+	if Connection.is_server(): return
+	
 	var accumulated_opusdata: Array[PackedByteArray] = []
 	while opuschunked.chunk_available():
 		if not should_send_opus_data():
@@ -68,7 +72,7 @@ func _process(_delta: float) -> void:
 
 
 func should_send_opus_data() -> bool:
-	return Microphone.is_speaking and Connection.is_peer_connected and not multiplayer.is_server()
+	return Microphone.is_speaking and Connection.is_peer_connected
 
 
 @rpc("any_peer", "call_remote", "unreliable_ordered", 1)

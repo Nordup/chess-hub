@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://du2h3ls050lkf"]
+
+[ext_resource type="PackedScene" uid="uid://b5ot2xc1qqau7" path="res://levels/interactable/base/interactable_base.tscn" id="1_olbpe"]
+[ext_resource type="Script" uid="uid://vlsc1iykn7gv" path="res://levels/interactable/interactable_link.gd" id="2_vqji5"]
+
+[node name="InteractableLink" instance=ExtResource("1_olbpe")]
+script = ExtResource("2_vqji5")
+link = ""
+text = "Open a link"

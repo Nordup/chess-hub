@@ -1,0 +1,40 @@
+[gd_scene load_steps=13 format=3 uid="uid://drqao660k6b7w"]
+
+[ext_resource type="PackedScene" uid="uid://nep0cf18irvj" path="res://chess/models/bishop_black.glb" id="1_gs46m"]
+[ext_resource type="PackedScene" uid="uid://dswnlggpt02f6" path="res://chess/models/bishop_white.glb" id="2_2w3jv"]
+[ext_resource type="PackedScene" uid="uid://duy1efag4j3y8" path="res://chess/models/king_black.glb" id="3_w7a0b"]
+[ext_resource type="PackedScene" uid="uid://50l6lv8pvvre" path="res://chess/models/king_white.glb" id="4_486bb"]
+[ext_resource type="PackedScene" uid="uid://b8pt31piiaua7" path="res://chess/models/knight_black.glb" id="5_lfpnx"]
+[ext_resource type="PackedScene" uid="uid://cto1lwaxhe0f" path="res://chess/models/knight_white.glb" id="6_b5xft"]
+[ext_resource type="PackedScene" uid="uid://bid4nerby42ih" path="res://chess/models/pawn_black.glb" id="7_j6c6s"]
+[ext_resource type="PackedScene" uid="uid://fxlewkddjhl" path="res://chess/models/pawn_white.glb" id="8_vefsi"]
+[ext_resource type="PackedScene" uid="uid://dn4t8r2aqq7lh" path="res://chess/models/queen_black.glb" id="9_0e7kp"]
+[ext_resource type="PackedScene" uid="uid://ckcmr6hvda400" path="res://chess/models/queen_white.glb" id="10_cbspi"]
+[ext_resource type="PackedScene" uid="uid://m6ctwsjll1vk" path="res://chess/models/rook_black.glb" id="11_4x36d"]
+[ext_resource type="PackedScene" uid="uid://c55x6p84p4mdr" path="res://chess/models/rook_white.glb" id="12_asys7"]
+
+[node name="ChessTiles" type="Node3D"]
+
+[node name="bishop_black" parent="." instance=ExtResource("1_gs46m")]
+
+[node name="bishop_white" parent="." instance=ExtResource("2_2w3jv")]
+
+[node name="king_black" parent="." instance=ExtResource("3_w7a0b")]
+
+[node name="king_white" parent="." instance=ExtResource("4_486bb")]
+
+[node name="knight_black" parent="." instance=ExtResource("5_lfpnx")]
+
+[node name="knight_white" parent="." instance=ExtResource("6_b5xft")]
+
+[node name="pawn_black" parent="." instance=ExtResource("7_j6c6s")]
+
+[node name="pawn_white" parent="." instance=ExtResource("8_vefsi")]
+
+[node name="queen_black" parent="." instance=ExtResource("9_0e7kp")]
+
+[node name="queen_white" parent="." instance=ExtResource("10_cbspi")]
+
+[node name="rook_black" parent="." instance=ExtResource("11_4x36d")]
+
+[node name="rook_white" parent="." instance=ExtResource("12_asys7")]

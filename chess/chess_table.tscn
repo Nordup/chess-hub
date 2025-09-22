@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://dp5ua27t3arad"]
+[gd_scene load_steps=5 format=3 uid="uid://dp5ua27t3arad"]
 
 [ext_resource type="PackedScene" uid="uid://du2h3ls050lkf" path="res://levels/interactable/interactable_link.tscn" id="1_gmrei"]
+[ext_resource type="MeshLibrary" uid="uid://df6hayaoyaxlg" path="res://chess/chess_figures.meshlib" id="2_8is7c"]
+[ext_resource type="PackedScene" uid="uid://b4p7716277m1w" path="res://chess/models/board.glb" id="2_xtek6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmrei"]
+emission_enabled = true
 
 [node name="ChessTable" type="Node3D"]
 
@@ -11,9 +16,20 @@ polygon = PackedVector2Array(0, 0, 0, 1.2, 1.6, 1.2, 1.6, 1.08, 0.4, 1.08, 0.4, 
 mode = 1
 spin_degrees = 360.0
 spin_sides = 4
+material = SubResource("StandardMaterial3D_gmrei")
 
 [node name="InteractableLinkPlayer1" parent="." instance=ExtResource("1_gmrei")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.8)
 
 [node name="InteractableLinkPlayer2" parent="." instance=ExtResource("1_gmrei")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.8)
+
+[node name="PlayingArea" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.226, 0)
+
+[node name="GridMap" type="GridMap" parent="PlayingArea"]
+mesh_library = ExtResource("2_8is7c")
+cell_size = Vector3(0.2, 0.2, 0.2)
+
+[node name="board" parent="PlayingArea" instance=ExtResource("2_xtek6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.026, 0)

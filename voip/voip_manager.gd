@@ -12,17 +12,16 @@ var users = {} # {Peer ID: VoipUser}
 
 
 func _ready() -> void:
-	if Connection.is_server(): return
-	
-	multiplayer.peer_connected.connect(peer_connected)
-	multiplayer.peer_disconnected.connect(peer_disconnected)
-	player_spawner.player_spawned.connect(player_spawned)
-	
 	var mic_bus = AudioServer.get_bus_index("Record")
 	opuschunked = AudioServer.get_bus_effect(mic_bus, 0)
 	denoiser_available = opuschunked.denoiser_available()
 	print("Denoiser available: ", denoiser_available)
 	print_audio_server_info()
+	
+	if Connection.is_server(): return
+	multiplayer.peer_connected.connect(peer_connected)
+	multiplayer.peer_disconnected.connect(peer_disconnected)
+	player_spawner.player_spawned.connect(player_spawned)
 
 
 func peer_connected(id: int) -> void:

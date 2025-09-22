@@ -68,3 +68,6 @@ func setup(anchor: CharacterBody3D) -> void:
 	_offset = global_transform.origin - anchor.global_transform.origin
 	camera.global_transform = camera.global_transform.interpolate_with(_pivot.global_transform, 0.1)
 	_camera_spring_arm.add_excluded_object(_anchor.get_rid())
+
+	top_level = true
+	camera.top_level = true

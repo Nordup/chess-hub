@@ -36,6 +36,7 @@ class_name Player
 @export var _direction: Vector3 = Vector3.ZERO
 @export var _strong_direction: Vector3 = Vector3.FORWARD
 
+var start_interpolate: bool
 var position_before_sync: Vector3
 
 var last_sync_time_ms: int
@@ -49,11 +50,11 @@ func _ready() -> void:
 		rotation_speed /= 1.5
 		_synchronizer.delta_synchronized.connect(on_synchronized)
 		_synchronizer.synchronized.connect(on_synchronized)
-		on_synchronized()
 
 
 func _physics_process(delta: float) -> void:
-	if not is_multiplayer_authority(): interpolate_client(delta); return
+	if not is_multiplayer_authority() and Connection.is_peer_connected:
+		interpolate_client(delta); return
 	
 	# Calculate ground height for camera controller
 	if _ground_shapecast.get_collision_count() > 0:
@@ -101,16 +102,17 @@ func _physics_process(delta: float) -> void:
 	
 	# Set character animation
 	if is_just_jumping:
-		_character_skin.jump.rpc()
+		try_call_rpc(_character_skin.jump)
 	elif not is_on_floor() and velocity.y < 0:
-		_character_skin.fall.rpc()
+		try_call_rpc(_character_skin.fall)
 	elif is_on_floor():
 		var xz_velocity := Vector3(velocity.x, 0, velocity.z)
 		if xz_velocity.length() > stopping_speed:
-			_character_skin.set_moving.rpc(true)
-			_character_skin.set_moving_speed.rpc(inverse_lerp(0.0, move_speed, xz_velocity.length()))
+			var speed = inverse_lerp(0.0, move_speed, xz_velocity.length())
+			try_call_rpc(_character_skin.set_moving.bind(true))
+			try_call_rpc(_character_skin.set_moving_speed.bind(speed))
 		else:
-			_character_skin.set_moving.rpc(false)
+			try_call_rpc(_character_skin.set_moving.bind(false))
 	
 	var position_before := global_position
 	move_and_slide()
@@ -124,6 +126,11 @@ func _physics_process(delta: float) -> void:
 		global_position += get_wall_normal() * 0.1
 	
 	set_sync_properties()
+
+
+func try_call_rpc(callable: Callable) -> void:
+	if Connection.is_peer_connected: callable.rpc()
+	else: callable.call()
 
 
 func set_sync_properties() -> void:
@@ -140,9 +147,15 @@ func on_synchronized() -> void:
 	var sync_time_ms = Time.get_ticks_msec()
 	sync_delta = clampf(float(sync_time_ms - last_sync_time_ms) / 1000, 0, sync_delta_max)
 	last_sync_time_ms = sync_time_ms
+	
+	if not start_interpolate:
+		start_interpolate = true
+		position = _position
+		_orient_character_to_direction(_strong_direction, 0, true)
 
 
 func interpolate_client(delta: float) -> void:
+	if not start_interpolate: return
 	_orient_character_to_direction(_strong_direction, delta)
 	
 	if _direction.length() == 0:
@@ -176,13 +189,14 @@ func _get_camera_oriented_input() -> Vector3:
 	return input
 
 
-func _orient_character_to_direction(direction: Vector3, delta: float) -> void:
+func _orient_character_to_direction(direction: Vector3, delta: float, force = false) -> void:
 	var left_axis := Vector3.UP.cross(direction)
 	var rotation_basis := Basis(left_axis, Vector3.UP, direction).get_rotation_quaternion()
 	var model_scale := _rotation_root.transform.basis.get_scale()
-	_rotation_root.transform.basis = Basis(_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)).scaled(
-		model_scale
-	)
+	_rotation_root.transform.basis = Basis(
+		_rotation_root.transform.basis.get_rotation_quaternion().slerp(rotation_basis, delta * rotation_speed)
+	).scaled(model_scale)
+	if force: _rotation_root.transform.basis = Basis(rotation_basis).scaled(model_scale)
 
 
 @rpc("any_peer", "call_remote", "reliable")

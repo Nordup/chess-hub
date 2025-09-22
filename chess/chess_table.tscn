@@ -12,24 +12,28 @@ emission_enabled = true
 [node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
 transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, 0, 0)
 use_collision = true
-polygon = PackedVector2Array(0, 0, 0, 1.2, 1.6, 1.2, 1.6, 1.08, 0.4, 1.08, 0.4, 0)
+polygon = PackedVector2Array(0, 0, 0, 1.2, 4, 1.2, 4, 1.08, 0.4, 1.08, 0.4, 0)
 mode = 1
 spin_degrees = 360.0
 spin_sides = 4
 material = SubResource("StandardMaterial3D_gmrei")
 
 [node name="InteractableLinkPlayer1" parent="." instance=ExtResource("1_gmrei")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
 
 [node name="InteractableLinkPlayer2" parent="." instance=ExtResource("1_gmrei")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.8)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 
 [node name="PlayingArea" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.226, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.265, 0)
 
 [node name="GridMap" type="GridMap" parent="PlayingArea"]
 mesh_library = ExtResource("2_8is7c")
-cell_size = Vector3(0.2, 0.2, 0.2)
+cell_size = Vector3(0.5, 0.5, 0.5)
+data = {
+"cells": PackedInt32Array(2, 65533, 7, 1, 65533, 7, 3, 65533, 7, 0, 65533, 7, 65535, 65533, 7, 65534, 65533, 7, 65533, 65533, 7, 65532, 65533, 7, 3, 65532, 11, 65532, 65532, 11, 2, 65532, 5, 65533, 65532, 5, 1, 65532, 1, 65534, 65532, 1, 65535, 65532, 3, 0, 65532, 9, 65532, 2, 6, 65534, 2, 6, 65533, 2, 6, 65535, 2, 6, 0, 2, 6, 1, 2, 6, 2, 2, 6, 3, 2, 6, 65532, 3, 10, 3, 3, 10, 65533, 3, 4, 2, 3, 4, 65534, 3, 0, 1, 3, 0, 0, 3, 8, 65535, 3, 2)
+}
+metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="board" parent="PlayingArea" instance=ExtResource("2_xtek6")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.026, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.065, 0)

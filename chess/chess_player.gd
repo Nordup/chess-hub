@@ -11,14 +11,14 @@ enum Side {
 }
 
 @export var chess_board: ChessBoard
-@export var camera_white: Camera3D
-@export var camera_black: Camera3D
+@export var camera_white: ChessCamera
+@export var camera_black: ChessCamera
 
-var previous_camera: Camera3D
-var camera: Camera3D
 var side: ChessPlayer.Side = ChessPlayer.Side.WHITE
-var selected_cell: Vector3i
-var selected_item: int = -1
+var camera: ChessCamera
+var previous_camera: Camera3D
+
+var figure_cell: Vector3i = Vector3i.MIN
 
 
 func play_chess(_side: ChessPlayer.Side) -> void:
@@ -42,20 +42,45 @@ func stop_chess() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not is_playing:
-		return
+	if not is_playing: return
+	if event is not InputEventMouseButton or not event.pressed: return
 	
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		var pick: Variant = chess_board.pick_cell_from_mouse(camera)
-		if pick == null:
-			selected_item = -1
-			return
-		
-		selected_cell = pick["cell"]
-		selected_item = pick["item"]
-		# Only consider valid items (>= 0) as figures present on the grid
-		if selected_item < 0:
-			return
-		
-		# Optional: you could emit a signal or call a method to highlight/select
-		# For now we just store the selection
+	if event.button_index == MOUSE_BUTTON_LEFT:
+		if figure_cell == Vector3i.MIN:
+			pick_figure()
+		else:
+			move_figure()
+	elif event.button_index == MOUSE_BUTTON_RIGHT:
+		drop_figure()
+
+
+func pick_figure() -> void:
+	var world_pos: Vector3 = camera.get_position_under_mouse()
+	if world_pos == Vector3.INF: return
+	
+	var cell: Vector3i = chess_board.get_cell(world_pos)
+	if not chess_board.has_item(cell): return
+	
+	figure_cell = cell
+	print("pick figure: ", chess_board.get_info(cell))
+
+
+func move_figure() -> void:
+	if figure_cell == Vector3i.MIN: return
+	
+	var world_pos: Vector3 = camera.get_position_under_mouse()
+	if world_pos == Vector3.INF: return
+	
+	var cell: Vector3i = chess_board.get_cell(world_pos)
+	if chess_board.has_item(cell): return
+	
+	print("move figure: ", chess_board.get_info(figure_cell), " to ", cell)
+	chess_board.move_item(figure_cell, cell)
+	figure_cell = Vector3i.MIN
+
+
+func drop_figure() -> void:
+	if figure_cell == Vector3i.MIN: return
+	
+	print("drop figure: ", chess_board.get_info(figure_cell))
+	figure_cell = Vector3i.MIN

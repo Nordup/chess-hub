@@ -10,39 +10,27 @@ func _ready() -> void:
 	mesh_library = grid_map.mesh_library
 
 
-func pick_cell_from_mouse(camera: Camera3D) -> Variant:
-	# Raycast from the given camera through the current mouse position and
-	# return a dictionary with the picked grid cell and its item on the given layer.
-	# Returns null if nothing on the GridMap was hit.
-	if camera == null or grid_map == null:
-		return null
-	
-	var mouse_pos: Vector2 = get_viewport().get_mouse_position()
-	var ray_origin: Vector3 = camera.project_ray_origin(mouse_pos)
-	var ray_dir: Vector3 = camera.project_ray_normal(mouse_pos)
-	var ray_end: Vector3 = ray_origin + ray_dir * 4096.0
-	
-	var space_state := get_world_3d().direct_space_state
-	var query := PhysicsRayQueryParameters3D.create(ray_origin, ray_end)
-	# Limit hits to the GridMap's collision layer to avoid unrelated geometry
-	query.collision_mask = grid_map.collision_layer
-	
-	var hit := space_state.intersect_ray(query)
-	if hit.is_empty():
-		return null
-	
-	var world_pos: Vector3 = hit["position"]
+func get_cell(world_pos: Vector3) -> Vector3i:
 	var local_pos: Vector3 = grid_map.to_local(world_pos)
-	var cell: Vector3i = grid_map.local_to_map(local_pos)
-	var item: int = grid_map.get_cell_item(cell)
-	
-	var mesh_name: String = mesh_library.get_item_name(item)
-	print("global position: %s, local position: %s" % [world_pos, local_pos])
-	print("selected item: %s, item: %s, cell: %s" % [mesh_name, item, cell])
-	
-	return {
-		"cell": cell,
-		"item": item,
-		"position": world_pos,
-		"layer": 0
-	}
+	return grid_map.local_to_map(local_pos)
+
+
+func has_item(cell: Vector3i) -> bool:
+	return get_item(cell) != GridMap.INVALID_CELL_ITEM
+
+
+func get_item(cell: Vector3i) -> int:
+	return grid_map.get_cell_item(cell)
+
+
+func get_item_name(cell: Vector3i) -> String:
+	return mesh_library.get_item_name(get_item(cell))
+
+
+func get_info(cell: Vector3i) -> Array[String]:
+	return [str(cell), str(get_item(cell)), get_item_name(cell)]
+
+
+func move_item(from_cell: Vector3i, to_cell: Vector3i) -> void:
+	grid_map.set_cell_item(to_cell, get_item(from_cell))
+	grid_map.set_cell_item(from_cell, GridMap.INVALID_CELL_ITEM)

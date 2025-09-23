@@ -1,0 +1,89 @@
+[gd_scene load_steps=7 format=3 uid="uid://b2oay7265dwx2"]
+
+[ext_resource type="FontFile" uid="uid://c638pe1c08oaa" path="res://fonts/Inter-Regular.otf" id="1_gmcad"]
+[ext_resource type="Resource" uid="uid://b7i7ukiyxx6ha" path="res://main/connection/connection_events.res" id="2_fv078"]
+[ext_resource type="Script" path="res://ui/connection_status/connection_fail.gd" id="2_rqqcs"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gqaqu"]
+bg_color = Color(0.129412, 0.14902, 0.180392, 0.972549)
+
+[sub_resource type="LabelSettings" id="LabelSettings_u0tau"]
+font = ExtResource("1_gmcad")
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_5rr8j"]
+font = ExtResource("1_gmcad")
+font_size = 24
+
+[node name="ConnectionFail" type="Control" node_paths=PackedStringArray("root")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_rqqcs")
+connection_events = ExtResource("2_fv078")
+root = NodePath("Control")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gqaqu")
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -332.0
+offset_top = -232.0
+offset_right = 332.0
+offset_bottom = 109.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "WE COULDN'T CONNECT TO SERVER :(
+
+
+Many players can't connect
+Please help me understand why???
+
+Press 'H' to fill out google form and make sure to leave your email for contact
+Thank you :3"
+label_settings = SubResource("LabelSettings_u0tau")
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="Label2" type="Label" parent="Control"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -332.0
+offset_top = -140.0
+offset_right = 332.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Press 'Enter' to hide this"
+label_settings = SubResource("LabelSettings_5rr8j")
+horizontal_alignment = 1
+autowrap_mode = 2

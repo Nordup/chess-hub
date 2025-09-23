@@ -1,13 +1,18 @@
-[gd_scene load_steps=12 format=3 uid="uid://mqnlrs6hn6g6"]
+[gd_scene load_steps=17 format=3 uid="uid://mqnlrs6hn6g6"]
 
+[ext_resource type="Script" path="res://ui/resolution_changer.gd" id="1_bsumw"]
 [ext_resource type="Script" uid="uid://548umeswylat" path="res://main/connection.gd" id="1_hlrxf"]
+[ext_resource type="Script" uid="uid://4cpxj6qhgo3l" path="res://levels/interactable/interactable_input_handler.gd" id="2_na0o7"]
 [ext_resource type="Script" uid="uid://cqxq6htu0i1ug" path="res://voip/voip_manager.gd" id="2_u8axh"]
 [ext_resource type="PackedScene" uid="uid://enpjmjm7ayyu" path="res://levels/hub_level.tscn" id="3_0cpj8"]
-[ext_resource type="PackedScene" uid="uid://2ne27phhv0kl" path="res://user_data/user_data_manager.tscn" id="3_rwvlu"]
+[ext_resource type="Resource" uid="uid://dgrhxxb8pf7wr" path="res://levels/interactable/interactable_events.res" id="3_73k8k"]
+[ext_resource type="PackedScene" uid="uid://2ne27phhv0kl" path="res://main/user_data/user_data_manager.tscn" id="3_rwvlu"]
 [ext_resource type="PackedScene" uid="uid://bjywb13vy4hl4" path="res://voip/voip_user.tscn" id="3_tfkyd"]
 [ext_resource type="Script" uid="uid://doaacvipx13fq" path="res://main/player_spawner.gd" id="4_edyrb"]
 [ext_resource type="PackedScene" uid="uid://cvl4jsitsxp0u" path="res://ui/ui.tscn" id="4_fvou2"]
-[ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://player/player.tscn" id="5_wb2xi"]
+[ext_resource type="Script" uid="uid://0suyruexksr4" path="res://main/connection/connection_manager.gd" id="5_73k8k"]
+[ext_resource type="PackedScene" uid="uid://ciqrpd5675boy" path="res://main/player/player.tscn" id="5_wb2xi"]
+[ext_resource type="Resource" uid="uid://b7i7ukiyxx6ha" path="res://main/connection/connection_events.res" id="6_5xyti"]
 [ext_resource type="Script" uid="uid://c3funj84b2o7x" path="res://voip/microphone.gd" id="6_fgpqb"]
 [ext_resource type="Script" uid="uid://biuoni11403fg" path="res://main/fall_checker.gd" id="9_vk48u"]
 
@@ -15,30 +20,41 @@
 
 [node name="Main" type="Node"]
 
-[node name="Connection" type="Node" parent="."]
+[node name="Independents" type="Node" parent="."]
+
+[node name="ResolutionChanger" type="Node" parent="Independents"]
+script = ExtResource("1_bsumw")
+
+[node name="InteractableInputHandler" type="Node" parent="Independents"]
+script = ExtResource("2_na0o7")
+events = ExtResource("3_73k8k")
+
+[node name="UserDataManager" parent="Independents" instance=ExtResource("3_rwvlu")]
+
+[node name="ConnectionManager" type="Node" parent="." node_paths=PackedStringArray("connection")]
+script = ExtResource("5_73k8k")
+connection = NodePath("Connection")
+connection_events = ExtResource("6_5xyti")
+
+[node name="Connection" type="Node" parent="ConnectionManager"]
 script = ExtResource("1_hlrxf")
 port = 56614
 max_clients = 256
 host = "188.245.188.59"
 use_localhost_in_editor = true
 
-[node name="UserDataManager" parent="." instance=ExtResource("3_rwvlu")]
-
 [node name="VoipManager" type="Node" parent="." node_paths=PackedStringArray("player_spawner")]
 script = ExtResource("2_u8axh")
 user_scn = ExtResource("3_tfkyd")
 player_spawner = NodePath("../PlayerSpawner")
 
-[node name="Microphone" type="AudioStreamPlayer" parent="."]
+[node name="Microphone" type="AudioStreamPlayer" parent="VoipManager"]
 stream = SubResource("AudioStreamMicrophone_40kex")
 autoplay = true
 bus = &"Record"
 script = ExtResource("6_fgpqb")
 
 [node name="UI" parent="." instance=ExtResource("4_fvou2")]
-hide_ui_and_connect = false
-
-[node name="Players" type="Node3D" parent="."]
 
 [node name="PlayerSpawner" type="MultiplayerSpawner" parent="." node_paths=PackedStringArray("spawn_points")]
 _spawnable_scenes = PackedStringArray("uid://ciqrpd5675boy")
@@ -47,15 +63,15 @@ script = ExtResource("4_edyrb")
 player_scene = ExtResource("5_wb2xi")
 spawn_points = NodePath("../HubLevel/SpawnPoints")
 
-[node name="FallChecker" type="Node" parent="." node_paths=PackedStringArray("player_spawner")]
+[node name="Players" type="Node3D" parent="."]
+
+[node name="FallChecker" type="Node3D" parent="." node_paths=PackedStringArray("player_spawner")]
 script = ExtResource("9_vk48u")
 fall_height = -20.0
 player_spawner = NodePath("../PlayerSpawner")
 
 [node name="HubLevel" parent="." instance=ExtResource("3_0cpj8")]
 
-[connection signal="disconnected" from="Connection" to="UI" method="show_ui"]
-[connection signal="connect_client" from="UI" to="Connection" method="start_client"]
-[connection signal="start_server" from="UI" to="Connection" method="start_server"]
+[connection signal="disconnected" from="ConnectionManager/Connection" to="UI" method="show_ui"]
 
 [editable path="HubLevel"]

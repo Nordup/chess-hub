@@ -1,12 +1,12 @@
 [gd_scene load_steps=19 format=3 uid="uid://ciqrpd5675boy"]
 
-[ext_resource type="Script" uid="uid://bj0vsr5tvnnmv" path="res://player/player.gd" id="1_pdbxc"]
-[ext_resource type="Script" uid="uid://bgna6q243icds" path="res://player/camera_controller.gd" id="2_2fob2"]
-[ext_resource type="Script" uid="uid://dc5076vcp7ywn" path="res://player/audio_listener.gd" id="2_4csdy"]
-[ext_resource type="Script" uid="uid://qga6qpucuogv" path="res://player/camera.gd" id="3_qxleh"]
-[ext_resource type="PackedScene" uid="uid://c0mo8tek77du4" path="res://player/model/character_skin.tscn" id="3_ufinh"]
+[ext_resource type="Script" uid="uid://bj0vsr5tvnnmv" path="res://main/player/player.gd" id="1_pdbxc"]
+[ext_resource type="Script" uid="uid://bgna6q243icds" path="res://main/player/camera_controller.gd" id="2_2fob2"]
+[ext_resource type="Script" uid="uid://dc5076vcp7ywn" path="res://main/player/audio_listener.gd" id="2_4csdy"]
+[ext_resource type="Script" uid="uid://qga6qpucuogv" path="res://main/player/camera.gd" id="3_qxleh"]
+[ext_resource type="PackedScene" uid="uid://c0mo8tek77du4" path="res://main/player/model/character_skin.tscn" id="3_ufinh"]
 [ext_resource type="Script" uid="uid://vs6lj7kcx6t4" path="res://ui/floating_nickname.gd" id="6_f61mk"]
-[ext_resource type="Resource" uid="uid://rclnl7v8k722" path="res://user_data/user_data_events.res" id="7_bgpps"]
+[ext_resource type="Resource" uid="uid://rclnl7v8k722" path="res://main/user_data/user_data_events.res" id="7_bgpps"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8x2xm"]
 

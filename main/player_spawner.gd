@@ -7,6 +7,9 @@ signal player_despawned(id: int)
 @export var player_scene: PackedScene
 @export var spawn_points: SpawnPoints
 
+const HIDDEN_POSITION = Vector3.UP * 1000
+var local_player: Player
+
 
 func _ready() -> void:
 	spawn_function = custom_spawn
@@ -14,45 +17,65 @@ func _ready() -> void:
 	multiplayer.peer_disconnected.connect(destroy_player)
 	spawned.connect(on_spawned)
 	despawned.connect(on_despawned)
+	create_local_player()
 
 
-func create_player(id: int):
-	if not multiplayer.is_server(): return
-	
+func create_local_player() -> void:
+	if Connection.is_server(): return
 	var spawn_position = spawn_points.get_spawn_position()
-	spawn([id, spawn_position])
-	print("Player %d spawned at " % [id] + str(spawn_position))
+	var player: Player = player_scene.instantiate()
+	
+	player.name = "LocalPlayer"
+	player.call_deferred("set_position", spawn_position)
+	local_player = player
+	
+	get_node(spawn_path).add_child(player)
 
 
-func destroy_player(id: int):
+func respawn_local_player() -> void:
+	var spawn_position = spawn_points.get_spawn_position()
+	local_player.respawn(spawn_position)
+	print("Respawn player at " + str(spawn_position))
+
+
+func create_player(id: int) -> void:
+	if not multiplayer.is_server(): return
+	spawn(id)
+	print("Player %d spawned" % [id])
+
+
+func destroy_player(id: int) -> void:
 	if not multiplayer.is_server(): return
 	get_node(spawn_path).get_node(str(id)).queue_free()
 	
 	player_despawned.emit(id)
 
 
-func respawn_player(id: int) -> void:
-	var player = get_node(spawn_path).get_node(str(id)) as Player
-	var spawn_position = spawn_points.get_spawn_position()
-	player.respawn.rpc_id(id, spawn_position)
-	print("Respawn player %d at " % [id] + str(spawn_position))
-
-
-func custom_spawn(vars) -> Node:
-	var id = vars[0]
-	var pos = vars[1]
+func custom_spawn(id: int) -> Node:
+	var player: Player
+	if id == multiplayer.get_unique_id():
+		local_player.set_multiplayer_authority(id)
+		local_player.name = str(id)
+		
+		var fake = player_scene.instantiate() as Player
+		fake.set_multiplayer_authority(0)
+		fake.name = "FakeLocalPlayer"
+		fake.position = HIDDEN_POSITION
+		call_deferred("remove_fake", fake)
+		
+		player = fake
+	else:
+		player = player_scene.instantiate() as Player
+		player.set_multiplayer_authority(id)
+		player.name = str(id)
+		player.position = HIDDEN_POSITION
 	
-	var p: Player = player_scene.instantiate()
-	p.set_multiplayer_authority(id)
-	p.name = str(id)
-	p.call_deferred("set_position", pos)
-	
-	player_spawned.emit(id, p)
-	return p
+	player_spawned.emit(id, player)
+	return player
 
 
-func get_player_or_null(id: int) -> Player:
-	return get_node(spawn_path).get_node_or_null(str(id))
+func remove_fake(fake: Player) -> void:
+	fake.queue_free()
 
 
 func on_spawned(node: Node) -> void:

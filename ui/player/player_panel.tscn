@@ -1,13 +1,16 @@
-[gd_scene load_steps=11 format=3 uid="uid://dpre6ebljycx4"]
+[gd_scene load_steps=12 format=3 uid="uid://dpre6ebljycx4"]
 
-[ext_resource type="Script" uid="uid://dkj8y5626ejfm" path="res://ui/player_panel.gd" id="1_hxm32"]
+[ext_resource type="Script" uid="uid://cb3j1ggoj2bis" path="res://ui/player/player_panel.gd" id="1_hxm32"]
 [ext_resource type="Resource" uid="uid://rclnl7v8k722" path="res://main/user_data/user_data_events.res" id="2_y2iyx"]
-[ext_resource type="Script" uid="uid://cfdj2xvjt612f" path="res://ui/change_name.gd" id="3_yfkbo"]
+[ext_resource type="FontFile" path="res://fonts/Inter-Regular.otf" id="3_rvc5b"]
+[ext_resource type="Script" uid="uid://61rmq40fsopn" path="res://ui/player/change_name.gd" id="3_yfkbo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tmqoe"]
 resource_local_to_scene = true
 bg_color = Color(0.211765, 0.211765, 0.211765, 0.505882)
 corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k7gc0"]
@@ -183,6 +186,7 @@ _data = {
 }
 
 [node name="PlayerPanel" type="Control" node_paths=PackedStringArray("nickname_edit", "volume_slider", "speaking_indicator", "animation_player")]
+visible = false
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 3
 anchors_preset = 0
@@ -236,6 +240,7 @@ grow_vertical = 2
 theme_override_colors/font_color = Color(1, 1, 1, 0.701961)
 theme_override_colors/font_uneditable_color = Color(1, 1, 1, 0.701961)
 theme_override_colors/selection_color = Color(1, 1, 1, 0.701961)
+theme_override_fonts/font = ExtResource("3_rvc5b")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_k7gc0")
 theme_override_styles/focus = SubResource("StyleBoxFlat_k7gc0")
@@ -246,6 +251,7 @@ editable = false
 script = ExtResource("3_yfkbo")
 
 [node name="SpeakIndicator" type="Panel" parent="MarginContainer/VBoxContainer/Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -273,10 +279,11 @@ scrollable = false
 visible = false
 layout_mode = 2
 theme_override_colors/default_color = Color(1, 1, 1, 0.701961)
+theme_override_fonts/normal_font = ExtResource("3_rvc5b")
 theme_override_font_sizes/normal_font_size = 14
 theme_override_font_sizes/bold_font_size = 12
 bbcode_enabled = true
-text = "[b]N[/b] - name, [b]Shift[/b] - speak, [b]Ctlr[/b] - volume"
+text = "Press N to change name"
 fit_content = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

@@ -45,6 +45,7 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 388.0
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Players"]
 layout_mode = 1

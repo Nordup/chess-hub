@@ -36,7 +36,7 @@ shadow_enabled = true
 environment = ExtResource("1_o5c6e")
 
 [node name="ChessTable" parent="." instance=ExtResource("25_efs00")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.796113, 4.000002, 2.0104027)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.160117, 4.000002, 3.1255875)
 
 [node name="SpawnPoints" type="Node3D" parent="."]
 script = ExtResource("2_nfojo")

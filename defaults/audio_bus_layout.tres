@@ -29,4 +29,4 @@ bus/3/bypass_fx = false
 bus/3/volume_db = 0.0
 bus/3/send = &"Master"
 bus/3/effect/0/effect = SubResource("AudioEffectOpusChunked_yv5ll")
-bus/3/effect/0/enabled = false
+bus/3/effect/0/enabled = true

@@ -27,6 +27,8 @@ func play_chess(_side: ChessPlayer.Side) -> void:
 	previous_camera = get_viewport().get_camera_3d()
 	camera = camera_white if side == ChessPlayer.Side.WHITE else camera_black
 	camera.make_current()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	EditMode.set_show_mouse(true)
 
 	print("Playing chess on side: ", side)
 
@@ -34,6 +36,8 @@ func play_chess(_side: ChessPlayer.Side) -> void:
 func stop_chess() -> void:
 	is_playing = false
 	previous_camera.make_current()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	EditMode.set_show_mouse(false)
 	
 	stopped_chess.emit()
 	print("Stopped chess")

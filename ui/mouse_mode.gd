@@ -29,7 +29,7 @@ func _notification(what: int) -> void:
 
 
 func set_captured(captured: bool) -> void:
-	if captured:
+	if captured and not EditMode.is_show_mouse:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	else:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

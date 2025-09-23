@@ -12,11 +12,6 @@ var users = {} # {Peer ID: VoipUser}
 
 
 func _ready() -> void:
-	if Connection.is_server(): return
-	multiplayer.peer_connected.connect(peer_connected)
-	multiplayer.peer_disconnected.connect(peer_disconnected)
-	player_spawner.player_spawned.connect(player_spawned)
-
 	var mic_bus = AudioServer.get_bus_index("Record")
 	opuschunked = AudioServer.get_bus_effect(mic_bus, 0)
 	AudioServer.set_bus_effect_enabled(mic_bus, 0, true)
@@ -24,6 +19,11 @@ func _ready() -> void:
 	denoiser_available = opuschunked.denoiser_available()
 	print("Denoiser available: ", denoiser_available)
 	print_audio_server_info()
+
+	if Connection.is_server(): return
+	multiplayer.peer_connected.connect(peer_connected)
+	multiplayer.peer_disconnected.connect(peer_disconnected)
+	player_spawner.player_spawned.connect(player_spawned)
 
 
 func peer_connected(id: int) -> void:
@@ -51,9 +51,7 @@ func player_spawned(id: int, player: Player) -> void:
 	if users.has(id): users[id].set_anchor(player)
 
 
-func _process(_delta: float) -> void:
-	if Connection.is_server(): return
-	
+func _physics_process(_delta: float) -> void:
 	var accumulated_opusdata: Array[PackedByteArray] = []
 	while opuschunked.chunk_available():
 		if not should_send_opus_data():
@@ -72,7 +70,7 @@ func _process(_delta: float) -> void:
 
 
 func should_send_opus_data() -> bool:
-	return Microphone.is_speaking and Connection.is_peer_connected
+	return Microphone.is_speaking and Connection.is_peer_connected and not Connection.is_server()
 
 
 @rpc("any_peer", "call_remote", "unreliable_ordered", 1)

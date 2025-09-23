@@ -83,14 +83,31 @@ func apply_state(_playing_white: int, _playing_black: int) -> void:
 
 
 func _update_ui() -> void:
-	# Enable/disable interactables based on whether a side is taken
-	var white_taken := playing_white != -1
-	interactable_play_white.set_enabled(not white_taken)
-	interactable_stop_white.set_enabled(white_taken)
-	
-	var black_taken := playing_black != -1
-	interactable_play_black.set_enabled(not black_taken)
-	interactable_stop_black.set_enabled(black_taken)
+	# Per-side logic:
+	# - If side is free: enable Play, disable Stop
+	# - If I'm playing this side: disable Play, enable Stop
+	# - If someone else is playing: disable both
+	var my_id: int = multiplayer.get_unique_id()
+	# White
+	if playing_white == -1:
+		interactable_play_white.set_enabled(true)
+		interactable_stop_white.set_enabled(false)
+	elif playing_white == my_id:
+		interactable_play_white.set_enabled(false)
+		interactable_stop_white.set_enabled(true)
+	else:
+		interactable_play_white.set_enabled(false)
+		interactable_stop_white.set_enabled(false)
+	# Black
+	if playing_black == -1:
+		interactable_play_black.set_enabled(true)
+		interactable_stop_black.set_enabled(false)
+	elif playing_black == my_id:
+		interactable_play_black.set_enabled(false)
+		interactable_stop_black.set_enabled(true)
+	else:
+		interactable_play_black.set_enabled(false)
+		interactable_stop_black.set_enabled(false)
 
 
 func _apply_local_play_state() -> void:

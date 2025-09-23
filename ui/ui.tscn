@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvl4jsitsxp0u"]
+[gd_scene load_steps=7 format=3 uid="uid://cvl4jsitsxp0u"]
 
 [ext_resource type="PackedScene" uid="uid://bb77fqgrkkjg5" path="res://ui/connection_status/connection_status.tscn" id="2_g2fln"]
 [ext_resource type="Script" uid="uid://3mc3rbe8amvy" path="res://ui/mouse_mode.gd" id="2_rhohj"]
+[ext_resource type="Script" uid="uid://1tipq0yw10fd" path="res://ui/connection_status/connection_status.gd" id="3_obcwv"]
+[ext_resource type="Resource" uid="uid://b7i7ukiyxx6ha" path="res://main/connection/connection_events.res" id="4_bo1jx"]
 [ext_resource type="PackedScene" uid="uid://b2oay7265dwx2" path="res://ui/connection_status/connection_fail.tscn" id="5_scdhw"]
 [ext_resource type="PackedScene" uid="uid://md4ik7uho32v" path="res://ui/interactable/interactable_panel.tscn" id="6_mid3e"]
 
@@ -18,16 +20,20 @@ mouse_filter = 1
 anchors_preset = 0
 script = ExtResource("2_rhohj")
 
-[node name="ConnectionStatus" parent="." instance=ExtResource("2_g2fln")]
+[node name="ConnectionStatus" type="Control" parent="." node_paths=PackedStringArray("label", "panel", "animation") instance=ExtResource("2_g2fln")]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-anchor_bottom = 0.0
 offset_top = 30.0
-offset_right = 0.0
 offset_bottom = 30.0
-grow_vertical = 1
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("3_obcwv")
+connection_events = ExtResource("4_bo1jx")
+label = NodePath("Control/VBoxContainer/PanelContainer/HBoxContainer/Label")
+panel = NodePath("Control/VBoxContainer/PanelContainer")
+animation = NodePath("AnimationPlayer")
 
 [node name="Interactable" parent="." instance=ExtResource("6_mid3e")]
 layout_mode = 1

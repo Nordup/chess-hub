@@ -84,3 +84,7 @@ func on_spawned(node: Node) -> void:
 
 func on_despawned(node: Node) -> void:
 	player_despawned.emit(node.get_multiplayer_authority())
+
+
+func get_player_or_null(id: int) -> Player:
+	return get_node(spawn_path).get_node_or_null(str(id))

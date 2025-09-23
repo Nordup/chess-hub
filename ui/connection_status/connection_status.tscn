@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://bb77fqgrkkjg5"]
 
-[ext_resource type="Script" path="res://ui/connection_status/connection_status.gd" id="1_fbogt"]
+[ext_resource type="Script" uid="uid://1tipq0yw10fd" path="res://ui/connection_status/connection_status.gd" id="1_fbogt"]
 [ext_resource type="FontFile" uid="uid://c638pe1c08oaa" path="res://fonts/Inter-Regular.otf" id="2_k7tqu"]
 [ext_resource type="Resource" uid="uid://b7i7ukiyxx6ha" path="res://main/connection/connection_events.res" id="2_pl3nx"]
 
@@ -105,9 +105,9 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_bokp4"]
 _data = {
-"RESET": SubResource("Animation_20jd1"),
-"hide": SubResource("Animation_1ync2"),
-"show": SubResource("Animation_qapr6")
+&"RESET": SubResource("Animation_20jd1"),
+&"hide": SubResource("Animation_1ync2"),
+&"show": SubResource("Animation_qapr6")
 }
 
 [node name="ConnectionStatus" type="Control" node_paths=PackedStringArray("label", "panel", "animation")]
@@ -172,5 +172,5 @@ layout_mode = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_bokp4")
+&"": SubResource("AnimationLibrary_bokp4")
 }

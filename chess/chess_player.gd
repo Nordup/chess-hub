@@ -36,6 +36,7 @@ func play_chess(_side: ChessPlayer.Side) -> void:
 func stop_chess() -> void:
 	is_playing = false
 	previous_camera.make_current()
+	drop_figure()
 	
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	EditMode.set_show_mouse(false)

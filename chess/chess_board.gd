@@ -3,11 +3,18 @@ class_name ChessBoard
 
 @export var grid_map: GridMap
 
-var mesh_library: MeshLibrary
+@onready var mesh_library: MeshLibrary = grid_map.mesh_library
+
+## Keep on server to sync board
+var used_cells: Dictionary = {} # {Item ID: Array[Vector3i]}
 
 
 func _ready() -> void:
-	mesh_library = grid_map.mesh_library
+	if Connection.is_server():
+		for item in mesh_library.get_item_list():
+			used_cells[item] = grid_map.get_used_cells_by_item(item)
+	else:
+		multiplayer.connected_to_server.connect(func(): request_board.rpc_id(1))
 
 
 func get_cell(world_pos: Vector3) -> Vector3i:
@@ -32,5 +39,32 @@ func get_info(cell: Vector3i) -> Array[String]:
 
 
 func move_item(from_cell: Vector3i, to_cell: Vector3i) -> void:
-	grid_map.set_cell_item(to_cell, get_item(from_cell))
+	rpc("move_item_on_all_peers", from_cell, to_cell)
+
+
+@rpc("any_peer", "call_remote", "reliable")
+func request_board() -> void:
+	print("request_board: ", used_cells)
+	setup_board.rpc_id(multiplayer.get_remote_sender_id(), used_cells)
+
+
+@rpc("authority", "call_remote", "reliable")
+func setup_board(_used_cells: Dictionary) -> void:
+	print("setup_board: ", _used_cells)
+	used_cells = _used_cells
+	grid_map.clear()
+	for item in used_cells:
+		var cells = used_cells[item]
+		for cell in cells:
+			grid_map.set_cell_item(cell, item)
+
+
+@rpc("any_peer", "call_local", "reliable")
+func move_item_on_all_peers(from_cell: Vector3i, to_cell: Vector3i) -> void:
+	var item = get_item(from_cell)
+	grid_map.set_cell_item(to_cell, item)
 	grid_map.set_cell_item(from_cell, GridMap.INVALID_CELL_ITEM)
+	
+	if Connection.is_server():
+		used_cells[item].erase(from_cell)
+		used_cells[item].append(to_cell)

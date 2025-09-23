@@ -1,30 +1,12 @@
 [gd_scene load_steps=6 format=3 uid="uid://dp5ua27t3arad"]
 
 [ext_resource type="PackedScene" uid="uid://dbwea4bh5jdc0" path="res://chess/chess_board.tscn" id="2_8is7c"]
-[ext_resource type="PackedScene" uid="uid://bg2r5fptuqe8w" path="res://levels/interactable/interactable_play_chess.tscn" id="4_7vljy"]
+[ext_resource type="PackedScene" uid="uid://bg2r5fptuqe8w" path="res://levels/interactable/interactable_play_stop_chess.tscn" id="4_7vljy"]
+[ext_resource type="Script" uid="uid://bb8ltwwd5y3qm" path="res://chess/chess_interactables_manager.gd" id="4_gsddp"]
 [ext_resource type="Script" uid="uid://fw02lsu1n3e" path="res://chess/chess_player.gd" id="4_moh5g"]
-[ext_resource type="PackedScene" uid="uid://pkv3dv12bjgd" path="res://levels/interactable/interactable_stop_chess.tscn" id="4_nagq7"]
 [ext_resource type="Script" uid="uid://bxi3tnn78r8jr" path="res://chess/chess_camera.gd" id="5_moh5g"]
 
 [node name="ChessTable" type="Node3D"]
-
-[node name="InteractablePlayChessWhite" parent="." node_paths=PackedStringArray("chess_player") instance=ExtResource("4_7vljy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
-chess_player = NodePath("../ChessPlayer")
-
-[node name="InteractableStopChess" parent="." node_paths=PackedStringArray("chess_player") instance=ExtResource("4_nagq7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
-chess_player = NodePath("../ChessPlayer")
-
-[node name="InteractablePlayChessBlack" parent="." node_paths=PackedStringArray("chess_player") instance=ExtResource("4_7vljy")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-chess_player = NodePath("../ChessPlayer")
-side = 1
-text = "Play with Black"
-
-[node name="InteractableStopChess2" parent="." node_paths=PackedStringArray("chess_player") instance=ExtResource("4_nagq7")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
-chess_player = NodePath("../ChessPlayer")
 
 [node name="ChessBoard" parent="." instance=ExtResource("2_8is7c")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
@@ -32,18 +14,35 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 [node name="ChessPlayer" type="Node3D" parent="." node_paths=PackedStringArray("chess_board", "camera_white", "camera_black")]
 script = ExtResource("4_moh5g")
 chess_board = NodePath("../ChessBoard")
-camera_white = NodePath("Camera3DWhite")
-camera_black = NodePath("Camera3DBlack")
+camera_white = NodePath("Camera3D")
+camera_black = NodePath("Camera3D2")
 
-[node name="Camera3DWhite" type="Camera3D" parent="ChessPlayer"]
+[node name="Camera3D" type="Camera3D" parent="ChessPlayer"]
 transform = Transform3D(-1, 7.5710346e-08, -4.3711385e-08, 0, 0.49999997, 0.86602545, 8.742278e-08, 0.86602545, -0.49999997, 0, 3.6, -2.3)
 script = ExtResource("5_moh5g")
 
-[node name="Camera3DBlack" type="Camera3D" parent="ChessPlayer"]
+[node name="Camera3D2" type="Camera3D" parent="ChessPlayer"]
 transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 3.6, 2.3)
 script = ExtResource("5_moh5g")
 
-[connection signal="play_chess" from="InteractablePlayChessWhite" to="InteractableStopChess" method="monitoring_enabled" binds= [true]]
-[connection signal="stop_chess" from="InteractableStopChess" to="InteractablePlayChessWhite" method="monitoring_enabled" binds= [true]]
-[connection signal="play_chess" from="InteractablePlayChessBlack" to="InteractableStopChess2" method="monitoring_enabled" binds= [true]]
-[connection signal="stop_chess" from="InteractableStopChess2" to="InteractablePlayChessBlack" method="monitoring_enabled" binds= [true]]
+[node name="Interactables" type="Node3D" parent="." node_paths=PackedStringArray("chess_player", "interactable_play_white", "interactable_play_black", "interactable_stop_white", "interactable_stop_black")]
+script = ExtResource("4_gsddp")
+chess_player = NodePath("../ChessPlayer")
+interactable_play_white = NodePath("InteractablePlay")
+interactable_play_black = NodePath("InteractablePlay2")
+interactable_stop_white = NodePath("InteractableStop")
+interactable_stop_black = NodePath("InteractableStop2")
+
+[node name="InteractablePlay" parent="Interactables" instance=ExtResource("4_7vljy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+
+[node name="InteractablePlay2" parent="Interactables" instance=ExtResource("4_7vljy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+
+[node name="InteractableStop" parent="Interactables" instance=ExtResource("4_7vljy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+text = "Exit Chess"
+
+[node name="InteractableStop2" parent="Interactables" instance=ExtResource("4_7vljy")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+text = "Exit Chess"

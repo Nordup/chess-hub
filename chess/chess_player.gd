@@ -22,6 +22,8 @@ var figure_cell: Vector3i = Vector3i.MIN
 
 
 func play_chess(_side: ChessPlayer.Side) -> void:
+	if is_playing: return
+	
 	is_playing = true
 	side = _side
 	
@@ -34,6 +36,8 @@ func play_chess(_side: ChessPlayer.Side) -> void:
 
 
 func stop_chess() -> void:
+	if not is_playing: return
+	
 	is_playing = false
 	previous_camera.make_current()
 	drop_figure()

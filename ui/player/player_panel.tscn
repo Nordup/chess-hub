@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cb3j1ggoj2bis" path="res://ui/player/player_panel.gd" id="1_hxm32"]
 [ext_resource type="Resource" uid="uid://rclnl7v8k722" path="res://main/user_data/user_data_events.res" id="2_y2iyx"]
-[ext_resource type="FontFile" path="res://fonts/Inter-Regular.otf" id="3_rvc5b"]
+[ext_resource type="FontFile" uid="uid://c638pe1c08oaa" path="res://fonts/Inter-Regular.otf" id="3_rvc5b"]
 [ext_resource type="Script" uid="uid://61rmq40fsopn" path="res://ui/player/change_name.gd" id="3_yfkbo"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tmqoe"]
@@ -181,12 +181,11 @@ tracks/5/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_mruyl"]
 _data = {
-"RESET": SubResource("Animation_tisq7"),
-"my_panel": SubResource("Animation_2fcr5")
+&"RESET": SubResource("Animation_tisq7"),
+&"my_panel": SubResource("Animation_2fcr5")
 }
 
 [node name="PlayerPanel" type="Control" node_paths=PackedStringArray("nickname_edit", "volume_slider", "speaking_indicator", "animation_player")]
-visible = false
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 3
 anchors_preset = 0
@@ -243,8 +242,8 @@ theme_override_colors/selection_color = Color(1, 1, 1, 0.701961)
 theme_override_fonts/font = ExtResource("3_rvc5b")
 theme_override_font_sizes/font_size = 24
 theme_override_styles/normal = SubResource("StyleBoxFlat_k7gc0")
-theme_override_styles/focus = SubResource("StyleBoxFlat_k7gc0")
 theme_override_styles/read_only = SubResource("StyleBoxFlat_k7gc0")
+theme_override_styles/focus = SubResource("StyleBoxFlat_k7gc0")
 text = "Player One"
 max_length = 20
 editable = false
@@ -288,5 +287,5 @@ fit_content = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_mruyl")
+&"": SubResource("AnimationLibrary_mruyl")
 }

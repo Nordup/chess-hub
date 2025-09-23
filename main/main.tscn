@@ -48,9 +48,10 @@ script = ExtResource("2_u8axh")
 user_scn = ExtResource("3_tfkyd")
 player_spawner = NodePath("../PlayerSpawner")
 
-[node name="Microphone" type="AudioStreamPlayer" parent="VoipManager"]
+[node name="Microphone" type="AudioStreamPlayer" parent="."]
 stream = SubResource("AudioStreamMicrophone_40kex")
 autoplay = true
+bus = &"Record"
 script = ExtResource("6_fgpqb")
 
 [node name="UI" parent="." instance=ExtResource("4_fvou2")]

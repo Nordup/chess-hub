@@ -41,8 +41,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
 
 [node name="InteractableStop" parent="Interactables" instance=ExtResource("4_7vljy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+hide_mesh = true
 text = "Exit Chess"
 
 [node name="InteractableStop2" parent="Interactables" instance=ExtResource("4_7vljy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 5)
+hide_mesh = true
 text = "Exit Chess"

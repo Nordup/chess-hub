@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://pkv3dv12bjgd"]
+
+[ext_resource type="PackedScene" uid="uid://b5ot2xc1qqau7" path="res://levels/interactable/base/interactable_base.tscn" id="1_u2eea"]
+[ext_resource type="Script" uid="uid://difnkuikww2n3" path="res://levels/interactable/interactable_stop_chess.gd" id="2_vpgyj"]
+
+[node name="InteractableStopChess" node_paths=PackedStringArray("area") instance=ExtResource("1_u2eea")]
+script = ExtResource("2_vpgyj")
+area = NodePath("Area3D")
+text = "Exit Chess"
+
+[node name="MeshInstance3D" parent="." index="1"]
+visible = false
+
+[node name="Area3D" parent="." index="2"]
+monitoring = false

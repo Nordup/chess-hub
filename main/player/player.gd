@@ -71,7 +71,7 @@ func _physics_process(delta: float) -> void:
 	
 	_move_direction = _get_camera_oriented_input()
 	
-	if EditMode.is_enabled:
+	if EditMode.is_enabled or ChessPlayer.is_playing:
 		is_just_jumping = false
 		is_air_boosting = false
 		_move_direction = Vector3.ZERO

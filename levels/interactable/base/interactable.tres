@@ -20,7 +20,7 @@ expanded_output_ports = [0]
 parameter_name = "Albedo"
 qualifier = 2
 default_value_enabled = true
-default_value = Color(1, 0.4117647, 0, 0.53333336)
+default_value = Color(1, 0.5833334, 0, 0.53333336)
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_c6p0a"]
 input_name = "time"
@@ -121,7 +121,7 @@ render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_disabled, dif
 varying vec3 var_positionOS;
 varying vec3 var_normalOS;
 
-instance uniform vec4 Albedo : source_color = vec4(1.000000, 0.411765, 0.000000, 0.533333);
+instance uniform vec4 Albedo : source_color = vec4(1.000000, 0.583333, 0.000000, 0.533333);
 uniform float Speed = 3.0;
 instance uniform float SinEffect = 0.20000000298023;
 uniform sampler2D curve_frg_36 : repeat_disable;
@@ -303,4 +303,4 @@ nodes/fragment/44/node = SubResource("VisualShaderNodeColorConstant_d53i1")
 nodes/fragment/44/position = Vector2(40, -340)
 nodes/fragment/45/node = SubResource("VisualShaderNodeVectorOp_d53i1")
 nodes/fragment/45/position = Vector2(220, -140)
-nodes/fragment/connections = PackedInt32Array(8, 0, 9, 0, 9, 2, 30, 0, 27, 0, 31, 0, 31, 0, 28, 0, 28, 0, 32, 0, 26, 4, 19, 0, 33, 0, 31, 1, 35, 0, 19, 1, 30, 0, 37, 0, 37, 0, 36, 0, 32, 0, 37, 1, 41, 0, 32, 1, 25, 0, 35, 1, 36, 0, 35, 0, 32, 0, 42, 0, 30, 0, 38, 0, 42, 0, 43, 0, 40, 0, 43, 1, 43, 0, 38, 1, 38, 0, 25, 0, 19, 0, 0, 1, 44, 0, 45, 0, 26, 0, 45, 1, 45, 0, 0, 0)
+nodes/fragment/connections = PackedInt32Array(8, 0, 9, 0, 9, 2, 30, 0, 27, 0, 31, 0, 31, 0, 28, 0, 28, 0, 32, 0, 26, 4, 19, 0, 33, 0, 31, 1, 35, 0, 19, 1, 30, 0, 37, 0, 37, 0, 36, 0, 32, 0, 37, 1, 41, 0, 32, 1, 25, 0, 35, 1, 36, 0, 35, 0, 32, 0, 42, 0, 30, 0, 38, 0, 42, 0, 43, 0, 40, 0, 43, 1, 43, 0, 38, 1, 38, 0, 25, 0, 19, 0, 0, 1, 26, 0, 0, 0, 44, 0, 45, 0, 26, 0, 45, 1, 45, 0, 0, 0)

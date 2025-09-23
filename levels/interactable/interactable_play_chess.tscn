@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg2r5fptuqe8w"]
+
+[ext_resource type="PackedScene" uid="uid://b5ot2xc1qqau7" path="res://levels/interactable/base/interactable_base.tscn" id="1_nm2d5"]
+[ext_resource type="Script" uid="uid://cogu6mffbxomh" path="res://levels/interactable/interactable_play_chess.gd" id="2_rq5vr"]
+
+[node name="InteractablePlayChess" node_paths=PackedStringArray("area") instance=ExtResource("1_nm2d5")]
+script = ExtResource("2_rq5vr")
+area = NodePath("Area3D")
+side = 0
+text = "Play with White"

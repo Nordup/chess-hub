@@ -5,7 +5,7 @@ class_name UserDataManager
 @export var user_data_events: UserDataEvents
 
 var my_user_data: UserData
-var user_datas = {} # {Peer ID: UserData}
+var user_datas: Dictionary[int, UserData] = {} # {Peer ID: UserData}
 
 
 func _ready() -> void:
@@ -36,4 +36,4 @@ func user_data_despawned(id: int) -> void:
 
 
 func try_get_user_data(id: int) -> UserData:
-	return user_datas[id] if user_datas.has(id) else null
+	return user_datas.get(id, null)

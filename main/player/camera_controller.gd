@@ -37,7 +37,7 @@ func _physics_process(delta: float) -> void:
 	_rotation_input += Input.get_action_raw_strength("camera_left") - Input.get_action_raw_strength("camera_right")
 	_tilt_input += Input.get_action_raw_strength("camera_up") - Input.get_action_raw_strength("camera_down")
 	
-	if EditMode.is_enabled:
+	if EditMode.is_enabled or ChessPlayer.is_playing:
 		_rotation_input = 0.0
 		_tilt_input = 0.0
 	

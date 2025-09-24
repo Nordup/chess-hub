@@ -20,7 +20,7 @@ expanded_output_ports = [0]
 parameter_name = "Albedo"
 qualifier = 2
 default_value_enabled = true
-default_value = Color(1, 0.5833334, 0, 0.53333336)
+default_value = Color(0.73333335, 0, 1, 0.53333336)
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_c6p0a"]
 input_name = "time"
@@ -82,7 +82,7 @@ operator = 2
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_22vty"]
 
 [sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_d53i1"]
-constant = Color(18.892157, 3.6266747, 0, 1)
+constant = Color(0.70725036, 0, 10.787155, 1)
 
 [sub_resource type="VisualShaderNodeVectorOp" id="VisualShaderNodeVectorOp_d53i1"]
 default_input_values = [0, Quaternion(0, 0, 0, 0), 1, Quaternion(0, 0, 0, 0)]
@@ -121,7 +121,7 @@ render_mode blend_mix, depth_draw_opaque, depth_test_default, cull_disabled, dif
 varying vec3 var_positionOS;
 varying vec3 var_normalOS;
 
-instance uniform vec4 Albedo : source_color = vec4(1.000000, 0.583333, 0.000000, 0.533333);
+instance uniform vec4 Albedo : source_color = vec4(0.733333, 0.000000, 1.000000, 0.533333);
 uniform float Speed = 3.0;
 instance uniform float SinEffect = 0.20000000298023;
 uniform sampler2D curve_frg_36 : repeat_disable;
@@ -151,7 +151,7 @@ void vertex() {
 
 void fragment() {
 // ColorConstant:44
-	vec4 n_out44p0 = vec4(18.892157, 3.626675, 0.000000, 1.000000);
+	vec4 n_out44p0 = vec4(0.707250, 0.000000, 10.787155, 1.000000);
 
 
 // ColorParameter:26

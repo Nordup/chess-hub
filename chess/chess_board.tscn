@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://dbwea4bh5jdc0"]
+[gd_scene load_steps=6 format=3 uid="uid://dbwea4bh5jdc0"]
 
 [ext_resource type="Script" uid="uid://yuwjxwfpaxxh" path="res://chess/chess_board.gd" id="1_6w8nq"]
 [ext_resource type="MeshLibrary" uid="uid://df6hayaoyaxlg" path="res://chess/chess_figures.meshlib" id="1_vftqi"]
 [ext_resource type="PackedScene" uid="uid://b4p7716277m1w" path="res://chess/models/board.glb" id="2_6w8nq"]
+[ext_resource type="AudioStream" uid="uid://qfwhxwviw4eo" path="res://chess/sound/chess_move.mp3" id="4_i78j5"]
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6w8nq"]
 
-[node name="ChessBoard" type="Node3D" node_paths=PackedStringArray("grid_map")]
+[node name="ChessBoard" type="Node3D" node_paths=PackedStringArray("grid_map", "audio_move")]
 script = ExtResource("1_6w8nq")
 grid_map = NodePath("GridMap")
+audio_move = NodePath("AudioStreamPlayer3D")
 
 [node name="board" parent="." instance=ExtResource("2_6w8nq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.065, 0)
@@ -23,3 +25,7 @@ metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_6w8nq")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_i78j5")
+volume_db = -10.0

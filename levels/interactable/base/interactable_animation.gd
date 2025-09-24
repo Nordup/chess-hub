@@ -14,7 +14,7 @@ const GAP = &"Gap"
 var tween: Tween
 
 var default_sin_effect: float = 0.2
-var default_color: Color = Color(0.490196, 0.819608, 1.000000, 0.603922)
+var default_color: Color = Color(0.733, 0.0, 1.0, 0.533)
 var default_gap: float = 0.0
 
 var current_sin_effect: float

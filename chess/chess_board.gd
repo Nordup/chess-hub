@@ -6,6 +6,7 @@ const BOARD_XZ_MAX: int = 5
 const BOARD_Y: int = 0
 
 @export var grid_map: GridMap
+@export var audio_move: AudioStreamPlayer3D
 
 @onready var mesh_library: MeshLibrary = grid_map.mesh_library
 
@@ -73,6 +74,7 @@ func move_item_on_all_peers(from_cell: Vector3i, to_cell: Vector3i) -> void:
 	var item = get_item(from_cell)
 	grid_map.set_cell_item(to_cell, item)
 	grid_map.set_cell_item(from_cell, GridMap.INVALID_CELL_ITEM)
+	audio_move.play()
 	
 	if Connection.is_server():
 		used_cells[item].erase(from_cell)

@@ -34,11 +34,11 @@ sound = NodePath("../AudioStreamPlayer3D")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 material_override = SubResource("ShaderMaterial_xnw17")
-instance_shader_parameters/Albedo = Color(0.490196, 0.819608, 1, 0.603922)
+instance_shader_parameters/Albedo = Color(0.733, 0, 1, 0.533)
 mesh = SubResource("CylinderMesh_0i8rg")
 skeleton = NodePath("../..")
 script = ExtResource("5_wfm1n")
-active_color = Color(0, 1, 0.215686, 0.603922)
+active_color = Color(0.73333335, 0, 1, 0.53333336)
 active_gap = 2.0
 tween_time = 0.5
 tween_trans = 10

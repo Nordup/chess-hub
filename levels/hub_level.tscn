@@ -29,14 +29,19 @@
 [node name="HubLevel" type="Node3D"]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866024, -0.433016, 0.25, 0, 0.499998, 0.866027, -0.500003, 0.75, -0.43301, 0, 0, 0)
+transform = Transform3D(-0.1509841, -0.61035174, 0.77760816, -0.22793688, 0.7869241, 0.57340664, -0.96189845, -0.09067028, -0.2579347, 0, 11.230117, 0)
 shadow_enabled = true
+shadow_bias = 0.05
+directional_shadow_split_1 = 0.05
+directional_shadow_split_2 = 0.1
+directional_shadow_split_3 = 0.25
+directional_shadow_blend_splits = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("1_o5c6e")
 
 [node name="ChessTable" parent="." instance=ExtResource("25_efs00")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.160117, 4.000002, 3.1255875)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 8.160117, 4.000002, 3.1255875)
 
 [node name="SpawnPoints" type="Node3D" parent="."]
 script = ExtResource("2_nfojo")
@@ -259,6 +264,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 8, -18)
 
 [node name="Portal" parent="Portals" instance=ExtResource("25_yv8ub")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 8, -26)
+url = "museum_of_all_things.gate"
 
 [node name="Portal2" parent="Portals" instance=ExtResource("25_yv8ub")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 22, 4, -3)
+url = "world.gate"

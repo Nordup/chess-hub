@@ -18,11 +18,13 @@ camera_white = NodePath("Camera3D")
 camera_black = NodePath("Camera3D2")
 
 [node name="Camera3D" type="Camera3D" parent="ChessPlayer"]
-transform = Transform3D(-1, 7.5710346e-08, -4.3711385e-08, 0, 0.49999997, 0.86602545, 8.742278e-08, 0.86602545, -0.49999997, 0, 3.6, -2.3)
+transform = Transform3D(-1, 7.571034e-08, -4.3711385e-08, -8.403402e-09, 0.4144391, 0.91007704, 8.7017945e-08, 0.91007704, -0.4144391, 0, 4.448546, -2.0674024)
+fov = 60.0
 script = ExtResource("5_moh5g")
 
 [node name="Camera3D2" type="Camera3D" parent="ChessPlayer"]
-transform = Transform3D(1, 0, 0, 0, 0.49999997, 0.86602545, 0, -0.86602545, 0.49999997, 0, 3.6, 2.3)
+transform = Transform3D(1, 0, 0, 0, 0.41469327, 0.9099613, 0, -0.9099613, 0.41469327, 0, 4.449, 2.067)
+fov = 60.0
 script = ExtResource("5_moh5g")
 
 [node name="Interactables" type="Node3D" parent="." node_paths=PackedStringArray("chess_player", "interactable_play_white", "interactable_play_black", "interactable_stop_white", "interactable_stop_black")]

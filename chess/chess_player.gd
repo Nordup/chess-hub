@@ -64,7 +64,7 @@ func pick_figure() -> void:
 	if world_pos == Vector3.INF: return
 	
 	var cell: Vector3i = chess_board.get_cell(world_pos)
-	if not chess_board.has_item(cell): return
+	if cell == Vector3i.MIN or not chess_board.has_item(cell): return
 	
 	figure_cell = cell
 	print("pick figure: ", chess_board.get_info(cell))
@@ -77,7 +77,7 @@ func move_figure() -> void:
 	if world_pos == Vector3.INF: return
 	
 	var cell: Vector3i = chess_board.get_cell(world_pos)
-	if chess_board.has_item(cell): return
+	if cell == Vector3i.MIN or chess_board.has_item(cell): return
 	
 	print("move figure: ", chess_board.get_info(figure_cell), " to ", cell)
 	chess_board.move_item(figure_cell, cell)

@@ -1,6 +1,10 @@
 extends Node3D
 class_name ChessBoard
 
+const BOARD_XZ_MIN: int = -6
+const BOARD_XZ_MAX: int = 5
+const BOARD_Y: int = 0
+
 @export var grid_map: GridMap
 
 @onready var mesh_library: MeshLibrary = grid_map.mesh_library
@@ -19,8 +23,12 @@ func _ready() -> void:
 
 func get_cell(world_pos: Vector3) -> Vector3i:
 	var local_pos: Vector3 = grid_map.to_local(world_pos)
-	print("get_cell: ", local_pos)
-	return grid_map.local_to_map(local_pos)
+	var map_pos: Vector3i = grid_map.local_to_map(local_pos)
+	return Vector3i.MIN if is_out_of_bounds(map_pos) else map_pos
+
+
+func is_out_of_bounds(map_pos: Vector3i) -> bool:
+	return map_pos.x < BOARD_XZ_MIN or map_pos.x > BOARD_XZ_MAX or map_pos.z < BOARD_XZ_MIN or map_pos.z > BOARD_XZ_MAX or map_pos.y != BOARD_Y
 
 
 func has_item(cell: Vector3i) -> bool:

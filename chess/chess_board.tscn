@@ -1,11 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://dbwea4bh5jdc0"]
+[gd_scene load_steps=5 format=3 uid="uid://dbwea4bh5jdc0"]
 
 [ext_resource type="Script" uid="uid://yuwjxwfpaxxh" path="res://chess/chess_board.gd" id="1_6w8nq"]
 [ext_resource type="MeshLibrary" uid="uid://df6hayaoyaxlg" path="res://chess/chess_figures.meshlib" id="1_vftqi"]
 [ext_resource type="PackedScene" uid="uid://b4p7716277m1w" path="res://chess/models/board.glb" id="2_6w8nq"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gmrei"]
-emission_enabled = true
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_6w8nq"]
 
@@ -15,15 +12,6 @@ grid_map = NodePath("GridMap")
 
 [node name="board" parent="." instance=ExtResource("2_6w8nq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.065, 0)
-
-[node name="CSGPolygon3D" type="CSGPolygon3D" parent="."]
-transform = Transform3D(0.70710677, 0, 0.70710677, 0, 1, 0, -0.70710677, 0, 0.70710677, 0, -1.265, 0)
-use_collision = true
-polygon = PackedVector2Array(0, 1.08, 0, 1.2, 4, 1.2, 4, 1.08)
-mode = 1
-spin_degrees = 360.0
-spin_sides = 4
-material = SubResource("StandardMaterial3D_gmrei")
 
 [node name="GridMap" type="GridMap" parent="."]
 mesh_library = ExtResource("1_vftqi")

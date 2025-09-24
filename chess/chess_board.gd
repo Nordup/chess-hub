@@ -19,6 +19,7 @@ func _ready() -> void:
 
 func get_cell(world_pos: Vector3) -> Vector3i:
 	var local_pos: Vector3 = grid_map.to_local(world_pos)
+	print("get_cell: ", local_pos)
 	return grid_map.local_to_map(local_pos)
 
 
